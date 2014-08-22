@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ $# -gt 0 ]
+then
+    SPECS=$*
+else
+    SPECS=spec/*_spec.rb
+fi
+
+for i in $SPECS; do
+    echo -------------------------------
+    echo $i:
+    echo -------------------------------
+    rspec $i
+done 
+
+echo -------------------------------
