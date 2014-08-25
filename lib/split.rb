@@ -25,4 +25,8 @@ class Split
     def started?
         !starttime.nil?
     end
+
+    def -(other)
+        time - other.time
+    end
 end

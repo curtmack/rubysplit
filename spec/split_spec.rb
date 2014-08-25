@@ -51,4 +51,13 @@ describe Split do
             split.started?.should be_false
         end
     end
+
+    describe "#-" do
+        it "returns the difference in times" do
+            endtime_late = Time.at(20)
+            split_a = Split.new("Test 1", starttime, endtime)
+            split_b = Split.new("Test 2", starttime, endtime_late)
+            (split_b - split_a).should == 10
+        end
+    end
 end
