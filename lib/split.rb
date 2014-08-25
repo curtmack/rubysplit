@@ -1,10 +1,15 @@
 class Split
-    attr_reader :name, :starttime, :endtime
+    attr_reader :name, :starttime, :endtime, :besttime
 
-    def initialize(name, starttime, endtime)
+    def initialize(name, starttime, endtime, besttime=0)
         @name = name
         @starttime = starttime
         @endtime = endtime
+        @besttime = besttime
+    end
+
+    def -(other)
+        time - other.time
     end
 
     def time
@@ -26,7 +31,11 @@ class Split
         !starttime.nil?
     end
 
-    def -(other)
-        time - other.time
+    def improved?
+        time < besttime
+    end
+
+    def gold
+        Split.new(name, nil, nil, time)
     end
 end
