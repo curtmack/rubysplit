@@ -60,4 +60,69 @@ describe Split do
             expect(split.started?).to be false
         end
     end
+
+    describe "#running?" do
+        it "returns true if started but not done" do
+            split = Split.new("Test", starttime, nil)
+            expect(split.running?).to be true
+        end
+        it "returns false if not started or done" do
+            split = Split.new("Test", nil, nil)
+            expect(split.running?).to be false
+            split = Split.new("Test", starttime, endtime)
+            expect(split.running?).to be false
+        end
+    end
+
+    describe "#start" do
+        it "returns a copy with starttime set to now" do
+            split = Split.new("Test", nil, nil)
+            started = split.start(starttime)
+            expect(started.started?).to be true
+            expect(started.starttime).to equal(starttime)
+            expect(started.endtime).to be_nil
+        end
+
+        it "raises an ArgumentError if already started" do
+            split = Split.new("Test", starttime, nil)
+            expect { split.start(starttime) }.to raise_error(ArgumentError)
+        end
+    end
+
+    describe "#stop" do
+        it "returns a copy with endtime set to now" do
+            split = Split.new("Test", starttime, nil)
+            stopped = split.stop(endtime)
+            expect(stopped.done?).to be true
+            expect(stopped.starttime).to equal(starttime)
+            expect(stopped.endtime).to equal(endtime)
+        end
+
+        it "raises an ArgumentError if already stopped or not started" do
+            split = Split.new("Test", nil, nil)
+            expect { split.stop(endtime) }.to raise_error(ArgumentError)
+            split = Split.new("Test", starttime, endtime)
+            expect { split.stop(endtime) }.to raise_error(ArgumentError)
+        end
+
+        it "raises an ArgumentError if stopping before starttime" do
+            split = Split.new("Test", endtime, nil)
+            expect { split.stop(starttime) }.to raise_error(ArgumentError)
+        end
+    end
+
+    describe "#skip" do
+        it "returns a copy with no time and skipped set to true" do
+            split = Split.new("Test", starttime, nil)
+            skipped = split.skip
+            expect(skipped.skipped).to be true
+            expect(skipped.starttime).to be_nil
+            expect(skipped.endtime).to be_nil
+        end
+
+        it "raises an ArgumentError if not running" do
+            split = Split.new("Test", nil, nil)
+            expect { split.skip }.to raise_error(ArgumentError)
+        end
+    end
 end
