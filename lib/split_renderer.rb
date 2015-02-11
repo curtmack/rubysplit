@@ -1,3 +1,0 @@
-class SplitRenderer
-    
-end
