@@ -60,28 +60,4 @@ describe Split do
             split.started?.should be_false
         end
     end
-
-    describe "#improved?" do
-        it "returns true if current time is better than best time" do
-            split_a = Split.new("Test 1", starttime, endtime_late)
-            split_b = Split.new("Test 2", starttime, endtime, split_a.time)
-            split_b.improved?.should be_true
-        end
-        it "returns false if current time is not better than best time" do
-            split_a = Split.new("Test 1", starttime, endtime)
-            split_b = Split.new("Test 2", starttime, endtime_late, split_a.time)
-            split_b.improved?.should be_false
-        end
-    end
-
-    describe "#gold" do
-        it "returns the split reset with besttime set to current time" do
-            split = Split.new("Test", starttime, endtime)
-            split_g = split.gold
-            split_g.name.should == split.name
-            split_g.starttime.should == nil
-            split_g.endtime.should == nil
-            split_g.besttime.should == split.time
-        end
-    end
 end
