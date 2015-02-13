@@ -20,8 +20,8 @@ class Numeric
         end
     end
 
-    def time_disp_diff(other)
-        rem = (self - other).abs
+    def time_disp_diff
+        rem = (self).abs
 
         hours = (rem / 3600).floor
         rem -= (hours * 3600)
@@ -34,7 +34,7 @@ class Numeric
 
         hundredths = (rem * 100).round
 
-        sign = (self < other) ? "-" : "+" 
+        sign = (self < 0) ? "-" : "+" 
 
         if (hours > 0)
             return "%s%2d:%02d:%02d" % [sign, hours, minutes, seconds]
