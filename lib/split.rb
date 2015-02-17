@@ -8,10 +8,6 @@ class Split
         @skipped = skipped
     end
 
-    def -(other)
-        time - other.time
-    end
-
     def time
         return nil if starttime.nil?
         return nil if endtime.nil? 
