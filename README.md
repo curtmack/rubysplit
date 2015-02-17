@@ -16,5 +16,6 @@ A work-in-progress split timer for speedrunners, built in the console using Ruby
 
 ## Possible future tasks
 
+* Bundling as a gem with simple installation and initialization
 * Adding graphs to visually display time savings, similar to some Livesplit configurations (text limits us somewhat but there are some options that might work)
 * Ability to configure global CouchDB servers with multiple users, share runs or PBs with other users, and so forth
