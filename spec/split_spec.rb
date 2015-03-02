@@ -4,7 +4,6 @@ require 'split'
 describe Split do
     starttime = Time.at(0)
     endtime = Time.at(10)
-    endtime_late = Time.at(20)
 
     describe "#time" do
         it "returns the time in seconds between start and end" do
