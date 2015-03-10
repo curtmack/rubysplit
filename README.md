@@ -6,7 +6,7 @@ A work-in-progress split timer for speedrunners, built in the console using Ruby
 
 * ~~Split class~~
 * ~~Run class~~
-* Renderer service fucntions for drawing Splits and Runs to the console
+* Renderer service functions for drawing Splits and Runs to the console
 * Definition classes for storing run definitions in the database
 * Add PBs to the definition classes
 * Write script to set up local CouchDB instance with appropriate security, design docs, etc.
