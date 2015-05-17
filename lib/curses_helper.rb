@@ -1,7 +1,7 @@
 require 'curses'
 
 class CursesHelper
-    
+
     def self.write_attrlist(list)
         attrs_set = false
         list.each do |item|
