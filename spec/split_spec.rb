@@ -5,6 +5,21 @@ describe Split do
     starttime = Time.at(0)
     endtime = Time.at(10)
 
+    describe "::initialize" do
+        it "creates an instance" do
+            split = Split.new("Test", starttime, endtime)
+            expect(split.is_a? Split).to be true
+        end
+
+        it "raises ArgumentError when ended but not started" do
+            expect { Split.new("Test", nil, endtime) }.to raise_error(ArgumentError)
+        end
+
+        it "raises ArgumentError when ended before start" do
+            expect { Split.new("Test", endtime, starttime) }.to raise_error(ArgumentError)
+        end
+    end
+
     describe "#time" do
         it "returns the time in seconds between start and end" do
             split = Split.new("Test", starttime, endtime)
@@ -14,8 +29,7 @@ describe Split do
         it "returns nil if start or end is nil" do
             splits = [
                 Split.new("Test 1", starttime, nil),
-                Split.new("Test 2", nil, endtime),
-                Split.new("Test 3", nil, nil)
+                Split.new("Test 2", nil, nil)
             ]
             splits.each do |split|
                 expect(split.time).to be_nil
@@ -51,7 +65,7 @@ describe Split do
             expect(split.started?).to be true
         end
         it "returns false if starttime is nil" do
-            split = Split.new("Test", nil, endtime)
+            split = Split.new("Test", nil, nil)
             expect(split.started?).to be false
         end
     end

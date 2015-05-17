@@ -4,6 +4,15 @@ class Run
     attr_reader :game, :route, :splits, :currsplit
 
     def initialize(game, route, splits = [], currsplit = 0)
+        if (splits.length > 1) then
+            (0...(splits.length - 1)).each do |i|
+                splitA, splitB = splits[i], splits[i+1]
+                # Verifying endtime is consecutive should be sufficient
+                # Other issues should be caught by Split's verifications
+                raise ArgumentError, "Splits in run are nonconsecutive!" if
+                    (splitA.endtime != splitB.starttime)
+            end
+        end
         @game = game
         @route = route
         @splits = (splits.nil? ? [] : splits)

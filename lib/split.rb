@@ -2,6 +2,13 @@ class Split
     attr_reader :name, :starttime, :endtime, :skipped
 
     def initialize(name, starttime, endtime, skipped = false)
+        raise ArgumentError, "Split can't be ended but not started!" if
+            starttime.nil? and
+            not endtime.nil?
+        raise ArgumentError, "Split can't be ended before it starts!" if
+            not starttime.nil? and
+            not endtime.nil? and
+            starttime > endtime
         @name = name
         @starttime = starttime
         @endtime = endtime
@@ -30,7 +37,7 @@ class Split
     def running?
         (started? && !done?)
     end
-    
+
     def start(now)
         raise ArgumentError, 'Split already started!' if started?
         Split.new(name, now, nil)

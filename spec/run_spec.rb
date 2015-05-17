@@ -9,6 +9,7 @@ describe Run do
     time30 = Time.at(30)
 
     splitnil = Split.new("Test split", nil, nil)
+    split10nil = Split.new("Test split", time20, nil)
     split0 = Split.new("Test split 0", time0, time10)
     split10 = Split.new("Test split 10", time10, time20)
     split20 = Split.new("Test split 20", time20, time30)
@@ -19,10 +20,16 @@ describe Run do
     it "has correct constructer and fields" do
         urn = Run.new("Test game", "Test route", [splitnil])
 
-        expect(urn.game).to eq("Test game")
-        expect(urn.route).to eq("Test route")
-        expect(urn.splits.first.name).to eq("Test split")
-        expect(urn.currsplit).to eq(0)
+            expect(urn.is_a? Run).to be true
+            expect(urn.game).to eq("Test game")
+            expect(urn.route).to eq("Test route")
+            expect(urn.splits.first.name).to eq("Test split")
+            expect(urn.currsplit).to eq(0)
+        end
+        it "raises ArgumentError if splits don't make sense" do
+            expect { Run.new("Test game", "Test route", [split0, split20]) }.to raise_error(ArgumentError)
+            expect { Run.new("Test game", "Test route", [split10, split0]) }.to raise_error(ArgumentError)
+        end
     end
 
     describe "#starttime" do
@@ -77,7 +84,7 @@ describe Run do
             expect(urn.elapsed(time30)).to be_nil
         end
         it "returns the time from starttime to end" do
-            urn = Run.new("Test game", "Test route", [split0, split10, splitnil])
+            urn = Run.new("Test game", "Test route", [split0, split10, split10nil])
             expect(urn.elapsed(time30)).to eq(30)
         end
     end
@@ -118,7 +125,7 @@ describe Run do
             expect(urn.running?).to be_nil
         end
         it "returns false if not started" do
-            urn = Run.new("Test game", "Test route", [splitnil, split0])
+            urn = Run.new("Test game", "Test route", [splitnil, splitnil])
             expect(urn.running?).to be false
         end
         it "returns false if done" do
@@ -126,7 +133,7 @@ describe Run do
             expect(urn.running?).to be false
         end
         it "returns true if started but not done" do
-            urn = Run.new("Test game", "Test route", [split0, split10, splitnil])
+            urn = Run.new("Test game", "Test route", [split0, split10, split10nil])
             expect(urn.running?).to be true
         end
     end
